@@ -10,7 +10,7 @@
 // maximum number of log entries that can be saved before a log dump is required
 #define MAX_LOG_SIZE 500
 // number of log entries at which a log dump is triggered
-#define LOG_WATERMARK 600 // (Originally at 450)
+#define LOG_WATERMARK 450
 // periodicity with which the log is dumped if the watermark is not reached beforehand
 #define LOGGING_PERIOD_MS 30000 // 1 minute
 
