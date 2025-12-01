@@ -33,7 +33,8 @@ TaskStats task_stats[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
 void vTask1(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t relative_deadline = pdMS_TO_TICKS(80);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(10);
     const uint32_t taskID = 1;
     const TickType_t xFrequency = pdMS_TO_TICKS(100);
     xLastWakeTime = xTaskGetTickCount();
@@ -42,15 +43,14 @@ void vTask1(void *pvParameters){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
-
+        busyDelay(job_execution_time);
         // Code to detect misses  
-        deadline = xLastWakeTime + relative_deadline;      
+        deadline = xLastWakeTime + absolute_deadline;      
         if (xTaskGetTickCount() > deadline) {
             task_stats[taskID].missed++;
         } else {
             task_stats[taskID].met++;
         }
-        busyDelay(2);
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
@@ -62,7 +62,8 @@ void vTask1(void *pvParameters){
 void vTask2(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t relative_deadline = pdMS_TO_TICKS(80);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(10);
     const uint32_t taskID = 2;
     const TickType_t xFrequency = pdMS_TO_TICKS(100);
     xLastWakeTime = xTaskGetTickCount();
@@ -71,15 +72,14 @@ void vTask2(void *pvParameters){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
-
+        busyDelay(job_execution_time);
         // Code to detect misses  
-        deadline = xLastWakeTime + relative_deadline;      
+        deadline = xLastWakeTime + absolute_deadline;      
         if (xTaskGetTickCount() > deadline) {
             task_stats[taskID].missed++;
         } else {
             task_stats[taskID].met++;
         }
-        busyDelay(2);
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
@@ -91,7 +91,8 @@ void vTask2(void *pvParameters){
 void vTask3(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t relative_deadline = pdMS_TO_TICKS(80);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(10);
     const uint32_t taskID = 3;
     const TickType_t xFrequency = pdMS_TO_TICKS(100);
     xLastWakeTime = xTaskGetTickCount();
@@ -100,15 +101,14 @@ void vTask3(void *pvParameters){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
-
+        busyDelay(job_execution_time);
         // Code to detect misses  
-        deadline = xLastWakeTime + relative_deadline;      
+        deadline = xLastWakeTime + absolute_deadline;      
         if (xTaskGetTickCount() > deadline) {
             task_stats[taskID].missed++;
         } else {
             task_stats[taskID].met++;
         }
-        busyDelay(2);
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
@@ -120,7 +120,8 @@ void vTask3(void *pvParameters){
 void vTask4(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t relative_deadline = pdMS_TO_TICKS(80);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(10);
     const uint32_t taskID = 4;
     const TickType_t xFrequency = pdMS_TO_TICKS(100);
     xLastWakeTime = xTaskGetTickCount();
@@ -129,15 +130,14 @@ void vTask4(void *pvParameters){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
-
+        busyDelay(job_execution_time);
         // Code to detect misses  
-        deadline = xLastWakeTime + relative_deadline;      
+        deadline = xLastWakeTime + absolute_deadline;      
         if (xTaskGetTickCount() > deadline) {
             task_stats[taskID].missed++;
         } else {
             task_stats[taskID].met++;
         }
-        busyDelay(2);
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
