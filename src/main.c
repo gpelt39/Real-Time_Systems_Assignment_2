@@ -20,24 +20,127 @@
 #include "utils/highPrioTask.h"
 #include "utils/delay.h"
 
-// function that makes the LED blink
-void vLedBlink(void *pvParameters) {
+// Global variables
+typedef struct {
+    uint32_t missed;
+    uint32_t met;
+} TaskStats;
+
+// Indexes: 0 = Counter, 1 = Display, 2 = Input
+TaskStats task_stats[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
+
+// Tasks
+void vTask1(void *pvParameters){
+    TickType_t xLastWakeTime;
+    TickType_t deadline;
+    const TickType_t relative_deadline = pdMS_TO_TICKS(80);
     const uint32_t taskID = 1;
-    const TickType_t xFrequency = pdMS_TO_TICKS(2000);
-    for (;;) {
+    const TickType_t xFrequency = pdMS_TO_TICKS(100);
+    xLastWakeTime = xTaskGetTickCount();
+
+    for(;;){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
-        // switch the LED on
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-        // busy wait for 200 ms
-        busyDelay(pdMS_TO_TICKS(200));
-        // switch the LED off
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-        // busy wait for 200 ms
-        busyDelay(pdMS_TO_TICKS(200));
+        // Do stuff...
+
+        // Code to detect misses  
+        deadline = xLastWakeTime + relative_deadline;      
+        if (xTaskGetTickCount() > deadline) {
+            task_stats[taskID].missed++;
+        } else {
+            task_stats[taskID].met++;
+        }
+        busyDelay(2);
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
-        vTaskDelay(xFrequency);
+        xTaskDelayUntil(&xLastWakeTime, xFrequency);
+    }
+    // should never reach here
+    vTaskDelete(NULL);
+}
+
+void vTask2(void *pvParameters){
+    TickType_t xLastWakeTime;
+    TickType_t deadline;
+    const TickType_t relative_deadline = pdMS_TO_TICKS(80);
+    const uint32_t taskID = 2;
+    const TickType_t xFrequency = pdMS_TO_TICKS(100);
+    xLastWakeTime = xTaskGetTickCount();
+
+    for(;;){
+        // record the time at which the task started the execution of a job
+        logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
+        // Do stuff...
+
+        // Code to detect misses  
+        deadline = xLastWakeTime + relative_deadline;      
+        if (xTaskGetTickCount() > deadline) {
+            task_stats[taskID].missed++;
+        } else {
+            task_stats[taskID].met++;
+        }
+        busyDelay(2);
+        // record the time at which the task completed the execution of a job
+        logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
+        xTaskDelayUntil(&xLastWakeTime, xFrequency);
+    }
+    // should never reach here
+    vTaskDelete(NULL);
+}
+
+void vTask3(void *pvParameters){
+    TickType_t xLastWakeTime;
+    TickType_t deadline;
+    const TickType_t relative_deadline = pdMS_TO_TICKS(80);
+    const uint32_t taskID = 3;
+    const TickType_t xFrequency = pdMS_TO_TICKS(100);
+    xLastWakeTime = xTaskGetTickCount();
+
+    for(;;){
+        // record the time at which the task started the execution of a job
+        logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
+        // Do stuff...
+
+        // Code to detect misses  
+        deadline = xLastWakeTime + relative_deadline;      
+        if (xTaskGetTickCount() > deadline) {
+            task_stats[taskID].missed++;
+        } else {
+            task_stats[taskID].met++;
+        }
+        busyDelay(2);
+        // record the time at which the task completed the execution of a job
+        logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
+        xTaskDelayUntil(&xLastWakeTime, xFrequency);
+    }
+    // should never reach here
+    vTaskDelete(NULL);
+}
+
+void vTask4(void *pvParameters){
+    TickType_t xLastWakeTime;
+    TickType_t deadline;
+    const TickType_t relative_deadline = pdMS_TO_TICKS(80);
+    const uint32_t taskID = 4;
+    const TickType_t xFrequency = pdMS_TO_TICKS(100);
+    xLastWakeTime = xTaskGetTickCount();
+
+    for(;;){
+        // record the time at which the task started the execution of a job
+        logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
+        // Do stuff...
+
+        // Code to detect misses  
+        deadline = xLastWakeTime + relative_deadline;      
+        if (xTaskGetTickCount() > deadline) {
+            task_stats[taskID].missed++;
+        } else {
+            task_stats[taskID].met++;
+        }
+        busyDelay(2);
+        // record the time at which the task completed the execution of a job
+        logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
+        xTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
     // should never reach here
     vTaskDelete(NULL);
@@ -65,14 +168,17 @@ int main() {
         switch (input_char) {
             case 's':
                 // turn off the LED before starting the scheduler
-                cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+                // cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
                 // initialize the logger and start the logging task
                 initLogger();
                 // start a high priority task running at priority 20
                 // addHighPriorityTask();
                 
-                // create the LED blink task (executing vLedBlink at priority 2)
-                // xTaskCreate(...);
+                // create task 1-4
+                xTaskCreate(vTask1, "Task 1", 256, NULL, 0, NULL);
+                xTaskCreate(vTask2, "Task 2", 256, NULL, 0, NULL);
+                xTaskCreate(vTask3, "Task 3", 256, NULL, 0, NULL);
+                xTaskCreate(vTask4, "Task 4", 256, NULL, 0, NULL);
                 
                 // start the scheduler
                 printf("Scheduler started\n");
