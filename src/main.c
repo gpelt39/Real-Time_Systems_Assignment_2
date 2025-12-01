@@ -33,10 +33,10 @@ TaskStats task_stats[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
 void vTask1(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(40);
     const TickType_t job_execution_time = pdMS_TO_TICKS(10);
     const uint32_t taskID = 1;
-    const TickType_t xFrequency = pdMS_TO_TICKS(100);
+    const TickType_t xFrequency = pdMS_TO_TICKS(50);
     xLastWakeTime = xTaskGetTickCount();
 
     for(;;){
@@ -63,7 +63,7 @@ void vTask2(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
     const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
-    const TickType_t job_execution_time = pdMS_TO_TICKS(10);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(20);
     const uint32_t taskID = 2;
     const TickType_t xFrequency = pdMS_TO_TICKS(100);
     xLastWakeTime = xTaskGetTickCount();
@@ -91,10 +91,10 @@ void vTask2(void *pvParameters){
 void vTask3(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
-    const TickType_t job_execution_time = pdMS_TO_TICKS(10);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(150);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(30);
     const uint32_t taskID = 3;
-    const TickType_t xFrequency = pdMS_TO_TICKS(100);
+    const TickType_t xFrequency = pdMS_TO_TICKS(150);
     xLastWakeTime = xTaskGetTickCount();
 
     for(;;){
@@ -120,10 +120,10 @@ void vTask3(void *pvParameters){
 void vTask4(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
-    const TickType_t job_execution_time = pdMS_TO_TICKS(10);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(140);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(60);
     const uint32_t taskID = 4;
-    const TickType_t xFrequency = pdMS_TO_TICKS(100);
+    const TickType_t xFrequency = pdMS_TO_TICKS(300);
     xLastWakeTime = xTaskGetTickCount();
 
     for(;;){
@@ -175,9 +175,9 @@ int main() {
                 // addHighPriorityTask();
                 
                 // create task 1-4
-                xTaskCreate(vTask1, "Task 1", 256, NULL, 0, NULL);
-                xTaskCreate(vTask2, "Task 2", 256, NULL, 0, NULL);
-                xTaskCreate(vTask3, "Task 3", 256, NULL, 0, NULL);
+                xTaskCreate(vTask1, "Task 1", 256, NULL, 3, NULL);
+                xTaskCreate(vTask2, "Task 2", 256, NULL, 2, NULL);
+                xTaskCreate(vTask3, "Task 3", 256, NULL, 1, NULL);
                 xTaskCreate(vTask4, "Task 4", 256, NULL, 0, NULL);
                 
                 // start the scheduler
