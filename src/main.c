@@ -26,7 +26,6 @@ typedef struct {
     uint32_t met;
 } TaskStats;
 
-// Indexes: 0 = Counter, 1 = Display, 2 = Input
 TaskStats task_stats[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
 
 // Tasks
@@ -47,9 +46,9 @@ void vTask1(void *pvParameters){
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline;      
         if (xTaskGetTickCount() > deadline) {
-            task_stats[taskID].missed++;
+            task_stats[taskID-1].missed++;
         } else {
-            task_stats[taskID].met++;
+            task_stats[taskID-1].met++;
         }
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
@@ -76,9 +75,9 @@ void vTask2(void *pvParameters){
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline;      
         if (xTaskGetTickCount() > deadline) {
-            task_stats[taskID].missed++;
+            task_stats[taskID-1].missed++;
         } else {
-            task_stats[taskID].met++;
+            task_stats[taskID-1].met++;
         }
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
@@ -105,9 +104,9 @@ void vTask3(void *pvParameters){
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline;      
         if (xTaskGetTickCount() > deadline) {
-            task_stats[taskID].missed++;
+            task_stats[taskID-1].missed++;
         } else {
-            task_stats[taskID].met++;
+            task_stats[taskID-1].met++;
         }
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
@@ -134,9 +133,9 @@ void vTask4(void *pvParameters){
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline;      
         if (xTaskGetTickCount() > deadline) {
-            task_stats[taskID].missed++;
+            task_stats[taskID-1].missed++;
         } else {
-            task_stats[taskID].met++;
+            task_stats[taskID-1].met++;
         }
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
