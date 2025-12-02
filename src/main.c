@@ -29,10 +29,18 @@ typedef struct {
 
 TaskStats task_stats[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
 
+typedef struct {
+    uint32_t WCET;
+    uint32_t BCET;
+} ResponseTimes;
+
+ResponseTimes response_times[4] = { {0,100}, {0,100}, {0,100}, {0,100} };
+
 // Tasks
 void vTask1(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
+    TickType_t finish_time;
     const TickType_t absolute_deadline = pdMS_TO_TICKS(4);
     const TickType_t job_execution_time = pdMS_TO_TICKS(1);
     const uint32_t taskID = 1;
@@ -47,7 +55,18 @@ void vTask1(void *pvParameters){
         busyDelay(job_execution_time);
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline; 
-        vTaskTieBreakerSet(deadline);     
+        finish_time = xTaskGetTickCount();
+        // Update WCET and BCET if current job is longer/shorter than a previous one
+        TickType_t response_time = finish_time - xLastWakeTime;
+        if (response_time > response_times[taskID-1].WCET) {
+            response_times[taskID-1].WCET = pdTICKS_TO_MS(response_time);
+            printf("New WCET for Task %d: %d ms\n", taskID, response_time);
+        }
+        if (response_time < response_times[taskID-1].BCET || response_times[taskID-1].BCET == 0) {
+            response_times[taskID-1].BCET = pdTICKS_TO_MS(response_time);
+            printf("New BCET for Task %d: %d ms\n", taskID, response_time);
+        }
+        // vTaskTieBreakerSet(deadline);     
         // if (xTaskGetTickCount() > deadline) {
         //     task_stats[taskID-1].missed++;
         // } else {
@@ -64,6 +83,7 @@ void vTask1(void *pvParameters){
 void vTask2(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
+    TickType_t finish_time;
     const TickType_t absolute_deadline = pdMS_TO_TICKS(8);
     const TickType_t job_execution_time = pdMS_TO_TICKS(2);
     const uint32_t taskID = 2;
@@ -78,7 +98,18 @@ void vTask2(void *pvParameters){
         busyDelay(job_execution_time);
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline; 
-        vTaskTieBreakerSet(deadline);     
+        finish_time = xTaskGetTickCount();
+        // Update WCET and BCET if current job is longer/shorter than a previous one
+        TickType_t response_time = finish_time - xLastWakeTime;
+        if (response_time > response_times[taskID-1].WCET) {
+            response_times[taskID-1].WCET = pdTICKS_TO_MS(response_time);
+            printf("New WCET for Task %d: %d ms\n", taskID, response_time);
+        }
+        if (response_time < response_times[taskID-1].BCET || response_times[taskID-1].BCET == 0) {
+            response_times[taskID-1].BCET = pdTICKS_TO_MS(response_time);
+            printf("New BCET for Task %d: %d ms\n", taskID, response_time);
+        }
+        // vTaskTieBreakerSet(deadline);     
         // if (xTaskGetTickCount() > deadline) {
         //     task_stats[taskID-1].missed++;
         // } else {
@@ -95,6 +126,7 @@ void vTask2(void *pvParameters){
 void vTask3(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
+    TickType_t finish_time;
     const TickType_t absolute_deadline = pdMS_TO_TICKS(15);
     const TickType_t job_execution_time = pdMS_TO_TICKS(3);
     const uint32_t taskID = 3;
@@ -109,7 +141,18 @@ void vTask3(void *pvParameters){
         busyDelay(job_execution_time);
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline; 
-        vTaskTieBreakerSet(deadline);     
+        finish_time = xTaskGetTickCount();
+        // Update WCET and BCET if current job is longer/shorter than a previous one
+        TickType_t response_time = finish_time - xLastWakeTime;
+        if (response_time > response_times[taskID-1].WCET) {
+            response_times[taskID-1].WCET = pdTICKS_TO_MS(response_time);
+            printf("New WCET for Task %d: %d ms\n", taskID, response_time);
+        }
+        if (response_time < response_times[taskID-1].BCET || response_times[taskID-1].BCET == 0) {
+            response_times[taskID-1].BCET = pdTICKS_TO_MS(response_time);
+            printf("New BCET for Task %d: %d ms\n", taskID, response_time);
+        }
+        // vTaskTieBreakerSet(deadline);     
         // if (xTaskGetTickCount() > deadline) {
         //     task_stats[taskID-1].missed++;
         // } else {
@@ -126,6 +169,7 @@ void vTask3(void *pvParameters){
 void vTask4(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
+    TickType_t finish_time;
     const TickType_t absolute_deadline = pdMS_TO_TICKS(14);
     const TickType_t job_execution_time = pdMS_TO_TICKS(6);
     const uint32_t taskID = 4;
@@ -140,7 +184,18 @@ void vTask4(void *pvParameters){
         busyDelay(job_execution_time);
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline; 
-        vTaskTieBreakerSet(deadline);     
+        finish_time = xTaskGetTickCount();
+        // Update WCET and BCET if current job is longer/shorter than a previous one
+        TickType_t response_time = finish_time - xLastWakeTime;
+        if (response_time > response_times[taskID-1].WCET) {
+            response_times[taskID-1].WCET = pdTICKS_TO_MS(response_time);
+            printf("New WCET for Task %d: %d ms\n", taskID, response_time);
+        }
+        if (response_time < response_times[taskID-1].BCET || response_times[taskID-1].BCET == 0) {
+            response_times[taskID-1].BCET = pdTICKS_TO_MS(response_time);
+            printf("New BCET for Task %d: %d ms\n", taskID, response_time);
+        }
+        // vTaskTieBreakerSet(deadline);     
         // if (xTaskGetTickCount() > deadline) {
         //     task_stats[taskID-1].missed++;
         // } else {
@@ -183,10 +238,10 @@ int main() {
                 // addHighPriorityTask();
                 
                 // create task 1-4
-                xTaskCreate(vTask1, "Task 1", 256, NULL, 1, NULL);
-                xTaskCreate(vTask2, "Task 2", 256, NULL, 1, NULL);
+                xTaskCreate(vTask1, "Task 1", 256, NULL, 4, NULL);
+                xTaskCreate(vTask2, "Task 2", 256, NULL, 3, NULL);
                 xTaskCreate(vTask3, "Task 3", 256, NULL, 1, NULL);
-                xTaskCreate(vTask4, "Task 4", 256, NULL, 1, NULL);
+                xTaskCreate(vTask4, "Task 4", 256, NULL, 2, NULL);
                 
                 // start the scheduler
                 printf("Scheduler started\n");
