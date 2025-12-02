@@ -19,6 +19,7 @@
 #include "utils/traces/traces.h"
 #include "utils/highPrioTask.h"
 #include "utils/delay.h"
+#include "utils/tiebreak.h"
 
 // Global variables
 typedef struct {
@@ -32,16 +33,17 @@ TaskStats task_stats[4] = { {0,0}, {0,0}, {0,0}, {0,0} };
 void vTask1(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t absolute_deadline = pdMS_TO_TICKS(40);
-    const TickType_t job_execution_time = pdMS_TO_TICKS(10);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(4);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(1);
     const uint32_t taskID = 1;
-    const TickType_t xFrequency = pdMS_TO_TICKS(50);
+    const TickType_t xFrequency = pdMS_TO_TICKS(5);
     xLastWakeTime = xTaskGetTickCount();
 
     for(;;){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
+        // printf("Task 1 executing\n");
         busyDelay(job_execution_time);
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline;      
@@ -61,16 +63,17 @@ void vTask1(void *pvParameters){
 void vTask2(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t absolute_deadline = pdMS_TO_TICKS(80);
-    const TickType_t job_execution_time = pdMS_TO_TICKS(20);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(8);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(2);
     const uint32_t taskID = 2;
-    const TickType_t xFrequency = pdMS_TO_TICKS(100);
+    const TickType_t xFrequency = pdMS_TO_TICKS(10);
     xLastWakeTime = xTaskGetTickCount();
 
     for(;;){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
+        // printf("Task 2 executing\n");
         busyDelay(job_execution_time);
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline;      
@@ -90,16 +93,17 @@ void vTask2(void *pvParameters){
 void vTask3(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t absolute_deadline = pdMS_TO_TICKS(150);
-    const TickType_t job_execution_time = pdMS_TO_TICKS(30);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(15);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(3);
     const uint32_t taskID = 3;
-    const TickType_t xFrequency = pdMS_TO_TICKS(150);
+    const TickType_t xFrequency = pdMS_TO_TICKS(15);
     xLastWakeTime = xTaskGetTickCount();
 
     for(;;){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
+        // printf("Task 3 executing\n");
         busyDelay(job_execution_time);
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline;      
@@ -119,16 +123,17 @@ void vTask3(void *pvParameters){
 void vTask4(void *pvParameters){
     TickType_t xLastWakeTime;
     TickType_t deadline;
-    const TickType_t absolute_deadline = pdMS_TO_TICKS(140);
-    const TickType_t job_execution_time = pdMS_TO_TICKS(60);
+    const TickType_t absolute_deadline = pdMS_TO_TICKS(14);
+    const TickType_t job_execution_time = pdMS_TO_TICKS(6);
     const uint32_t taskID = 4;
-    const TickType_t xFrequency = pdMS_TO_TICKS(300);
+    const TickType_t xFrequency = pdMS_TO_TICKS(30);
     xLastWakeTime = xTaskGetTickCount();
 
     for(;;){
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
+        // printf("Task 4 executing\n");
         busyDelay(job_execution_time);
         // Code to detect misses  
         deadline = xLastWakeTime + absolute_deadline;      
@@ -174,14 +179,14 @@ int main() {
                 // addHighPriorityTask();
                 
                 // create task 1-4
-                xTaskCreate(vTask1, "Task 1", 256, NULL, 3, NULL);
-                xTaskCreate(vTask2, "Task 2", 256, NULL, 2, NULL);
-                xTaskCreate(vTask3, "Task 3", 256, NULL, 1, NULL);
-                xTaskCreate(vTask4, "Task 4", 256, NULL, 0, NULL);
+                xTaskCreate(vTask1, "Task 1", 256, NULL, 4, NULL);
+                xTaskCreate(vTask2, "Task 2", 256, NULL, 3, NULL);
+                xTaskCreate(vTask3, "Task 3", 256, NULL, 2, NULL);
+                xTaskCreate(vTask4, "Task 4", 256, NULL, 1, NULL);
                 
                 // start the scheduler
                 printf("Scheduler started\n");
-                // ...
+                vTaskStartScheduler();
                 break;
             case 'q':
                 printf("Program stopped\n");
