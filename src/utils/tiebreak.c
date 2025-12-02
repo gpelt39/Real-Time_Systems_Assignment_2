@@ -1,4 +1,4 @@
-#include "utils/tiebreak.h"
+#include "tiebreak.h"
 
 UBaseType_t uxTaskTieBreakerGet() {
     StaticTask_t** mypxCurrentTCB = (StaticTask_t**)(&pxCurrentTCB);

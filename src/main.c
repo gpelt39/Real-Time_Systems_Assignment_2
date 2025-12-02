@@ -46,12 +46,13 @@ void vTask1(void *pvParameters){
         // printf("Task 1 executing\n");
         busyDelay(job_execution_time);
         // Code to detect misses  
-        deadline = xLastWakeTime + absolute_deadline;      
-        if (xTaskGetTickCount() > deadline) {
-            task_stats[taskID-1].missed++;
-        } else {
-            task_stats[taskID-1].met++;
-        }
+        deadline = xLastWakeTime + absolute_deadline; 
+        vTaskTieBreakerSet(deadline);     
+        // if (xTaskGetTickCount() > deadline) {
+        //     task_stats[taskID-1].missed++;
+        // } else {
+        //     task_stats[taskID-1].met++;
+        // }
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
@@ -76,12 +77,13 @@ void vTask2(void *pvParameters){
         // printf("Task 2 executing\n");
         busyDelay(job_execution_time);
         // Code to detect misses  
-        deadline = xLastWakeTime + absolute_deadline;      
-        if (xTaskGetTickCount() > deadline) {
-            task_stats[taskID-1].missed++;
-        } else {
-            task_stats[taskID-1].met++;
-        }
+        deadline = xLastWakeTime + absolute_deadline; 
+        vTaskTieBreakerSet(deadline);     
+        // if (xTaskGetTickCount() > deadline) {
+        //     task_stats[taskID-1].missed++;
+        // } else {
+        //     task_stats[taskID-1].met++;
+        // }
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
@@ -106,12 +108,13 @@ void vTask3(void *pvParameters){
         // printf("Task 3 executing\n");
         busyDelay(job_execution_time);
         // Code to detect misses  
-        deadline = xLastWakeTime + absolute_deadline;      
-        if (xTaskGetTickCount() > deadline) {
-            task_stats[taskID-1].missed++;
-        } else {
-            task_stats[taskID-1].met++;
-        }
+        deadline = xLastWakeTime + absolute_deadline; 
+        vTaskTieBreakerSet(deadline);     
+        // if (xTaskGetTickCount() > deadline) {
+        //     task_stats[taskID-1].missed++;
+        // } else {
+        //     task_stats[taskID-1].met++;
+        // }
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
@@ -136,12 +139,13 @@ void vTask4(void *pvParameters){
         // printf("Task 4 executing\n");
         busyDelay(job_execution_time);
         // Code to detect misses  
-        deadline = xLastWakeTime + absolute_deadline;      
-        if (xTaskGetTickCount() > deadline) {
-            task_stats[taskID-1].missed++;
-        } else {
-            task_stats[taskID-1].met++;
-        }
+        deadline = xLastWakeTime + absolute_deadline; 
+        vTaskTieBreakerSet(deadline);     
+        // if (xTaskGetTickCount() > deadline) {
+        //     task_stats[taskID-1].missed++;
+        // } else {
+        //     task_stats[taskID-1].met++;
+        // }
         // record the time at which the task completed the execution of a job
         logEvent(taskID, JOB_COMPLETION, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         xTaskDelayUntil(&xLastWakeTime, xFrequency);
@@ -179,10 +183,10 @@ int main() {
                 // addHighPriorityTask();
                 
                 // create task 1-4
-                xTaskCreate(vTask1, "Task 1", 256, NULL, 4, NULL);
-                xTaskCreate(vTask2, "Task 2", 256, NULL, 3, NULL);
+                xTaskCreate(vTask1, "Task 1", 256, NULL, 1, NULL);
+                xTaskCreate(vTask2, "Task 2", 256, NULL, 1, NULL);
                 xTaskCreate(vTask3, "Task 3", 256, NULL, 1, NULL);
-                xTaskCreate(vTask4, "Task 4", 256, NULL, 2, NULL);
+                xTaskCreate(vTask4, "Task 4", 256, NULL, 1, NULL);
                 
                 // start the scheduler
                 printf("Scheduler started\n");

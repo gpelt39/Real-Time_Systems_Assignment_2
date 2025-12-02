@@ -53,6 +53,7 @@ add_executable(${PROJECTNAME}
     src/utils/traces/traces.c
     src/utils/highPrioTask.c
     src/utils/delay.c
+    src/utils/tiebreak.c
     )
 
 # Add this line to include the directory containing lwipopts.h
