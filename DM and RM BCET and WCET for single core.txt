@@ -1,0 +1,33 @@
+DM FP scheduling for single core
+Task 1:
+BCET = 1 ms
+WCET = 64 ms
+
+Task 2:
+BCET = 2 ms
+WCET = 81 ms
+
+Task 3:
+BCET = 4 ms
+WCET = 112 ms
+
+Task 4:
+BCET = 17 ms
+WCET = 172 ms
+
+RM FP scheduling
+Task 1:
+BCET = 1 ms
+WCET = 64 ms
+
+Task 2:
+BCET = 2 ms
+WCET = 81 ms
+
+Task 3:
+BCET = 3 ms
+WCET = 173 ms
+
+Task 4:
+BCET = 10 ms
+WCET = 114 ms

@@ -106,8 +106,8 @@
 */
 
 /* SMP port only */
-#define configNUMBER_OF_CORES                   2   // added for multicore functionality
-#define configUSE_PASSIVE_IDLE_HOOK             0   // added for multicore functionality
+// #define configNUMBER_OF_CORES                   2   // added for multicore functionality
+// #define configUSE_PASSIVE_IDLE_HOOK             0   // added for multicore functionality
 #define configNUM_CORES                         2
 #define configTICK_CORE                         0
 #define configRUN_MULTIPLE_PRIORITIES           1

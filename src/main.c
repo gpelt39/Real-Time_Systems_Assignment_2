@@ -240,8 +240,8 @@ int main() {
                 // create task 1-4
                 xTaskCreate(vTask1, "Task 1", 256, NULL, 4, NULL);
                 xTaskCreate(vTask2, "Task 2", 256, NULL, 3, NULL);
-                xTaskCreate(vTask3, "Task 3", 256, NULL, 1, NULL);
-                xTaskCreate(vTask4, "Task 4", 256, NULL, 2, NULL);
+                xTaskCreate(vTask3, "Task 3", 256, NULL, 2, NULL);
+                xTaskCreate(vTask4, "Task 4", 256, NULL, 1, NULL);
                 
                 // start the scheduler
                 printf("Scheduler started\n");

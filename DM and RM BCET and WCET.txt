@@ -1,4 +1,4 @@
-DM FP scheduling
+DM FP scheduling for multicore
 Task 1:
 BCET = 1 ms
 WCET = 154 ms
