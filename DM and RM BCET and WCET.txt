@@ -1,33 +1,16 @@
 DM FP scheduling for multicore
 Task 1:
 BCET = 1 ms
-WCET = 154 ms
+WCET = 173 ms
 
 Task 2:
 BCET = 2 ms
-WCET = 166 ms
+WCET = 170 ms
 
 Task 3:
 BCET = 4 ms
-WCET = 225 ms
+WCET = 240 ms
 
 Task 4:
 BCET = 6 ms
-WCET = 177 ms
-
-RM FP scheduling
-Task 1:
-BCET = 1 ms
-WCET = 146 ms
-
-Task 2:
-BCET = 2 ms
-WCET = 166 ms
-
-Task 3:
-BCET = 3 ms
-WCET = 170 ms
-
-Task 4:
-BCET = 6 ms
-WCET = 219 ms
+WCET = 199 ms
