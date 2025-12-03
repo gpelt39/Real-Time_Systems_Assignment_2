@@ -38,6 +38,8 @@ void vTask1(void *pvParameters){
     const uint32_t taskID = 1;
     const TickType_t xFrequency = pdMS_TO_TICKS(5);
     xLastWakeTime = xTaskGetTickCount();
+    deadline = xLastWakeTime + absolute_deadline; 
+    vTaskTieBreakerSet(deadline); 
 
     for(;;){
         // record the time at which the task started the execution of a job
@@ -45,9 +47,7 @@ void vTask1(void *pvParameters){
         // Do stuff...
         // printf("Task 1 executing\n");
         busyDelay(job_execution_time);
-        // Code to detect misses  
-        deadline = xLastWakeTime + absolute_deadline; 
-        vTaskTieBreakerSet(deadline);     
+        // Code to detect misses      
         // if (xTaskGetTickCount() > deadline) {
         //     task_stats[taskID-1].missed++;
         // } else {
@@ -69,6 +69,8 @@ void vTask2(void *pvParameters){
     const uint32_t taskID = 2;
     const TickType_t xFrequency = pdMS_TO_TICKS(10);
     xLastWakeTime = xTaskGetTickCount();
+    deadline = xLastWakeTime + absolute_deadline; 
+    vTaskTieBreakerSet(deadline); 
 
     for(;;){
         // record the time at which the task started the execution of a job
@@ -76,9 +78,7 @@ void vTask2(void *pvParameters){
         // Do stuff...
         // printf("Task 2 executing\n");
         busyDelay(job_execution_time);
-        // Code to detect misses  
-        deadline = xLastWakeTime + absolute_deadline; 
-        vTaskTieBreakerSet(deadline);     
+        // Code to detect misses      
         // if (xTaskGetTickCount() > deadline) {
         //     task_stats[taskID-1].missed++;
         // } else {
@@ -100,6 +100,8 @@ void vTask3(void *pvParameters){
     const uint32_t taskID = 3;
     const TickType_t xFrequency = pdMS_TO_TICKS(15);
     xLastWakeTime = xTaskGetTickCount();
+    deadline = xLastWakeTime + absolute_deadline; 
+    vTaskTieBreakerSet(deadline);
 
     for(;;){
         // record the time at which the task started the execution of a job
@@ -107,9 +109,7 @@ void vTask3(void *pvParameters){
         // Do stuff...
         // printf("Task 3 executing\n");
         busyDelay(job_execution_time);
-        // Code to detect misses  
-        deadline = xLastWakeTime + absolute_deadline; 
-        vTaskTieBreakerSet(deadline);     
+        // Code to detect misses       
         // if (xTaskGetTickCount() > deadline) {
         //     task_stats[taskID-1].missed++;
         // } else {
@@ -131,6 +131,8 @@ void vTask4(void *pvParameters){
     const uint32_t taskID = 4;
     const TickType_t xFrequency = pdMS_TO_TICKS(30);
     xLastWakeTime = xTaskGetTickCount();
+    deadline = xLastWakeTime + absolute_deadline; 
+    vTaskTieBreakerSet(deadline); 
 
     for(;;){
         // record the time at which the task started the execution of a job
@@ -138,9 +140,7 @@ void vTask4(void *pvParameters){
         // Do stuff...
         // printf("Task 4 executing\n");
         busyDelay(job_execution_time);
-        // Code to detect misses  
-        deadline = xLastWakeTime + absolute_deadline; 
-        vTaskTieBreakerSet(deadline);     
+        // Code to detect misses      
         // if (xTaskGetTickCount() > deadline) {
         //     task_stats[taskID-1].missed++;
         // } else {
