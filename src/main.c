@@ -37,11 +37,11 @@ void vTask1(void *pvParameters){
     const TickType_t job_execution_time = pdMS_TO_TICKS(1);
     const uint32_t taskID = 1;
     const TickType_t xFrequency = pdMS_TO_TICKS(5);
-    xLastWakeTime = xTaskGetTickCount();
-    deadline = xLastWakeTime + absolute_deadline; 
-    vTaskTieBreakerSet(deadline); 
+    xLastWakeTime = xTaskGetTickCount(); 
 
     for(;;){
+        deadline = xLastWakeTime + absolute_deadline; 
+        vTaskTieBreakerSet(deadline);
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
@@ -69,10 +69,10 @@ void vTask2(void *pvParameters){
     const uint32_t taskID = 2;
     const TickType_t xFrequency = pdMS_TO_TICKS(10);
     xLastWakeTime = xTaskGetTickCount();
-    deadline = xLastWakeTime + absolute_deadline; 
-    vTaskTieBreakerSet(deadline); 
 
     for(;;){
+        deadline = xLastWakeTime + absolute_deadline; 
+        vTaskTieBreakerSet(deadline);
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
@@ -100,10 +100,10 @@ void vTask3(void *pvParameters){
     const uint32_t taskID = 3;
     const TickType_t xFrequency = pdMS_TO_TICKS(15);
     xLastWakeTime = xTaskGetTickCount();
-    deadline = xLastWakeTime + absolute_deadline; 
-    vTaskTieBreakerSet(deadline);
 
     for(;;){
+        deadline = xLastWakeTime + absolute_deadline; 
+        vTaskTieBreakerSet(deadline);
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
@@ -131,10 +131,10 @@ void vTask4(void *pvParameters){
     const uint32_t taskID = 4;
     const TickType_t xFrequency = pdMS_TO_TICKS(30);
     xLastWakeTime = xTaskGetTickCount();
-    deadline = xLastWakeTime + absolute_deadline; 
-    vTaskTieBreakerSet(deadline); 
 
     for(;;){
+        deadline = xLastWakeTime + absolute_deadline; 
+        vTaskTieBreakerSet(deadline);
         // record the time at which the task started the execution of a job
         logEvent(taskID, JOB_START, (uint32_t)(xTaskGetTickCount() * portTICK_PERIOD_MS));
         // Do stuff...
